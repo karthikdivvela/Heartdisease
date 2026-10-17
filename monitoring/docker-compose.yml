@@ -1,10 +1,13 @@
 services:
+  heart-api:
+    image: heart-api:latest
+    ports: ["8000:8000"]
   prometheus:
     image: prom/prometheus:latest
+    network_mode: host
     volumes: ["./prometheus.yml:/etc/prometheus/prometheus.yml:ro"]
-    ports: ["9090:9090"]
-    extra_hosts: ["host.docker.internal:host-gateway"]
+    depends_on: [heart-api]
   grafana:
     image: grafana/grafana:latest
-    ports: ["3000:3000"]
+    network_mode: host
     depends_on: [prometheus]
