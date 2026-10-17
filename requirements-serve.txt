@@ -1,0 +1,10 @@
+# Slim runtime for the Docker image (inference only).
+# scikit-learn / numpy / pandas versions MUST match the training environment.
+numpy==2.4.4
+pandas==3.0.2
+scikit-learn==1.8.0
+joblib==1.5.3
+fastapi==0.143.3
+uvicorn==0.54.0
+prometheus-client==0.26.0
+pydantic==2.14.1

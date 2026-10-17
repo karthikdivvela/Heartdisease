@@ -1,0 +1,7 @@
+global:
+  scrape_interval: 5s
+scrape_configs:
+  - job_name: heart-api
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["host.docker.internal:8000"]   # API running locally or via docker run -p 8000:8000
