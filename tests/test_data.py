@@ -7,7 +7,7 @@ from src.features import build_preprocessor
 def test_clean_handles_missing_and_binarises_target(raw_df):
     out = clean(raw_df)
     assert list(out.columns) == COLUMNS
-    assert set(out["target"].unique()) <= {0}
+    assert set(out["target"].unique()) <= {0,1}
     assert out["ca"].isna().sum() >= 1          # '?' became NaN
     assert out["ca"].dtype.kind in "fi"
 
