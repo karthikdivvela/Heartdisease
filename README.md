@@ -16,7 +16,8 @@ A machine learning classifier that predicts the risk of heart disease from patie
 | Path | Purpose |
 |---|---|
 | `scripts/` | `download_data.py` (data download), `create_grafana_dashboard.py` (creates the Grafana dashboard) |
-| `src/` | `data.py` (cleaning), `features.py` (preprocessing pipeline), `eda.py` (plots), `train.py` (training, tuning, MLflow) |
+| `src/` | `data.py` (cleaning), `features.py` (preprocessing pipeline), `eda.py` (plots), `train.py` (training, tuning, MLflow), `predict.py` (offline inference) |
+| `samples/` | example input files (`sample_patient.json`, `sample_patients.csv`) for `predict.py` |
 | `app/` | `main.py` - FastAPI service (`/predict`, `/health`, `/metrics`) with request logging |
 | `tests/` | pytest unit tests (8) for data, model training and the API |
 | `data/` | `heart.csv` - the cleaned dataset |
@@ -64,9 +65,26 @@ All 8 tests should pass and flake8 should print nothing.
 
 ## 3. Run the API locally
 
+## Inference (offline, without the API)
+
+`src/predict.py` loads `models/model.joblib` and predicts for a JSON or CSV file. It prints the same fields as the API: `prediction`, `label`, `confidence` and `probability_disease`. Run it from the repository root:
+
+```
+python -m src.predict --input samples/sample_patient.json
+python -m src.predict --input samples/sample_patients.csv --output results.csv
+```
+
+Expected output for the sample patient:
+
+```
+prediction      label  confidence  probability_disease
+         0 no disease      0.8345               0.1655
+```
+
 ```bash
 uvicorn app.main:app --reload
 ```
+
 
 Open http://localhost:8000/docs for the interactive documentation.
 
